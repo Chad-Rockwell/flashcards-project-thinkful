@@ -4,13 +4,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
+
+//making the component function that will create a new deck and passing in the correct prop from the parent
 function CreateForm({submitNewDeckHandler}) {
+  //making a state for the new deck
     const [newDeck, setNewDeck] = useState({
         name: "",
         description: "",
     })
+    //using state to determine if the new deck has been submitted
     const [submitted, setSubmitted] = useState(false);
-
+    
+    //this function prevents refresh on submit, takes in the input values of the form and updates the state of the new deck
     function makeNewDeckThenPass(event) {
         event.preventDefault();
         let newName = event.target.name.value;
@@ -18,17 +23,17 @@ function CreateForm({submitNewDeckHandler}) {
         setNewDeck({
             name: newName,
             description: newDescription, 
-        })        
+        })
+        //it will then set submitted to true so the useEffect condition to pass the new card info from the form will be met       
         setSubmitted(true);
     }
-
+    //this will pass the new deck data into the prop of the component which will update the api with the new deck
     useEffect(() => {
-        console.log("this should be the new deck", newDeck, submitted)
         if(submitted) {
             submitNewDeckHandler(newDeck);
         }
     }, [newDeck]);
-
+    //rendering the form and using onSubmit to run the proper functions
   return (
     <React.Fragment>
       <Nav create={true} />

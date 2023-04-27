@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
+//this component is a nav bar that will take in props to display the correct text and nav links
 function Nav({ deck, type, create }) {
   return (
     <div className="container">

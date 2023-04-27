@@ -4,6 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Nav from "./Nav";
 
+
+//this function will fetch the right deck using the id provided from useParams
+//it will display either the front or back of the current card depending on the state (front)
+//state of card count is used and incremented by the next button, this will be used to display the correct card
+//when the deck is complete and the cardCount meets the length of the deck a window will display that prompts the user to restart the deck or return home
+//if there are not enough cards in the deck the component will render no cards and instead display a message stating more cards are required
+//it will also display a button(link) to the add cards page that will navigate to the proper page/component to add more cards to the current deck
 function Study() {
   const [deck, setDeck] = useState([]);
   let { deckId } = useParams();

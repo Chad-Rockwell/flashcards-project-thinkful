@@ -27,10 +27,17 @@ import Header from "./Header";
 import NotFound from "./NotFound";
 import CreateForm from "./CreateForm";
 
+//this function will display the layout of the app and has the necessary functions and data to make the app work correctly
 function Layout() {
+  //setting a state for the decks data to be stored after a fetch in a useEffect function
   const [decks, setDecks] = useState([]);
+  //declaring history so we can use that router function
   const history = useHistory();
-
+  //the following functions are to be passed in as props to child components so actions in those components will behave as expected
+  //each function will be called with the correct data passed in from the child component
+  //that data will be used to run a function from the utils/api
+  //functions that update the decks array will trigger the useEffect that fetches the decks to refresh
+  //useHistory hook will be used to navigate to the right page after the function updates the data in the API
   function submitNewDeckHandler(deck) {
     createDeck(deck).then((data) => {
       fetchDecks();
@@ -77,7 +84,8 @@ function Layout() {
   }
 
   useEffect(fetchDecks, []);
-
+  //rendering all the child components when the correct route is accessed/inputted into the browser
+  //paths also contain what is needed for child components to properly utilize useParams
   return (
     <React.Fragment>
       <Header />

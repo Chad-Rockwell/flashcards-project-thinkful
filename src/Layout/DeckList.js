@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+//this function/component will be used to display the correct deck data from the parents deck array
+//the map was moved from this component into the parent component
+//it will take in the mapped deck as a prop and the parent function to delete a deck when the button is clicked 
 function DeckList({deck, deleteDeckHandler}) {
   return (
     <div className="col-12 d-flex justify-content-center m-2">

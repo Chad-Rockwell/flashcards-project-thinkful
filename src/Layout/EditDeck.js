@@ -4,9 +4,14 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { readDeck } from "../utils/api";
 
+
+//making the component function that will edit an existing deck that passes in the correct prop from the parent
 function EditDeck({editDeckHandler}) {
+  //grabing the deck id from useParams
   let { deckId } = useParams();
+  //making a state for the existing deck
   const [deck, setDeck] = useState([]);
+  //making a state for the updated deck information
   const [newDeck, setNewDeck] = useState({
     name: "",
     description: "",
@@ -14,10 +19,12 @@ function EditDeck({editDeckHandler}) {
   })
   const [submitted, setSubmitted] = useState(false);
 
+  //using the id grabbed from params to fetch the deck data
   useEffect(() => {
     readDeck(deckId).then((data) => setDeck(data));
   }, []);
 
+  //use effect that will pass the updated card data into the parent function prop
   useEffect(() => {
     console.log("this should be the updated deck", submitted)
     if(submitted) {
@@ -28,7 +35,7 @@ function EditDeck({editDeckHandler}) {
   if (!deck.cards) {
     return <div>Loading</div>;
   }
-
+  //this function will prevent a refresh on submit and update the updated card states data so it can be passed into the prop function 
   function passSubmit(event) {
     event.preventDefault();
     setNewDeck({

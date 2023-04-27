@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import Nav from "./Nav";
 import { readDeck } from "../utils/api";
 
+
+//declaring the function of the component that will display the selected deck based on useParams
+//it takes in props that will make the delete buttons work correctly by passing the correct data to the proper parent component functions
+
 function Deck({deleteDeckHandler, deleteCardHandler}) {
   let { deckId } = useParams();
   const [deck, setDeck] = useState([]);
