@@ -56,7 +56,7 @@ function Study() {
           <p className="lead font-weight-normal">
             You need at least 3 cards to study. There are 2 cards in this deck.
           </p>
-          <Link to="" className="btn btn-primary btn-lg">Add Cards</Link>
+          <Link to={`/decks/${deck.id}/cards/new`} className="btn btn-primary btn-lg">Add Cards</Link>
         </div>
       </React.Fragment>
     );

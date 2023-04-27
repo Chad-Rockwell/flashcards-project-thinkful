@@ -1,26 +1,53 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-function CardForm({ deck, card = { front: "", back: "" } }) {
-  const [card, setCard] = useState(card);
+function CardForm({
+  newCard,
+  cardSubmitHandler,
+  deck,
+  card = { front: "", back: "" },
+}) {
+  const [formCard, setFormCard] = useState(card);
+  const [submitted, setSubmitted] = useState(false);
+  const cardDefault = { front: "", back: "" };
+
+  useEffect(() => {
+    if (!newCard) {
+      setFormCard(card);
+    }
+  }, [card]);
+
+  function submitButtonHandler(event) {
+    event.preventDefault();
+    setSubmitted(true);
+  }
+
+  useEffect(() => {
+    if (submitted) {
+      cardSubmitHandler(deck.id, formCard, newCard);
+      setFormCard(cardDefault);
+      setSubmitted(false);
+    }
+  }, [submitted]);
+
   return (
     <React.Fragment>
-      <Nav create={true} />
       <div className="container">
-        <form>
+        <form onSubmit={(event) => submitButtonHandler(event)}>
           <div className="form-group">
             <label className="lead font-weight-normal" htmlFor="front">
               Front
             </label>
             <textarea
-              className="form-control"
+              className="form-control form-control-lg"
               type="text"
               id="front"
               name="front"
               placeholder="Front side of card"
-              value={card.front}
+              value={formCard.front}
               onChange={(event) =>
-                setCard({ ...card, front: event.target.value })
+                setFormCard({ ...formCard, front: event.target.value })
               }
             ></textarea>
           </div>
@@ -34,21 +61,38 @@ function CardForm({ deck, card = { front: "", back: "" } }) {
               id="back"
               type="text"
               placeholder="Back side of card"
-              value={card.back}
+              value={formCard.back}
               onChange={(event) =>
-                setCard({ ...card, back: event.target.value })
+                setFormCard({ ...formCard, back: event.target.value })
               }
             ></textarea>
           </div>
-          <Link
-            className="btn btn-lg btn-secondary mr-2"
-            to={`/decks/${deck.id}`}
-          >
-            Done
-          </Link>
-          <button className="btn btn-lg btn-primary" type="submit">
-            Save
-          </button>
+          {newCard && (
+            <Link
+              className="btn btn-lg btn-secondary mr-2"
+              to={`/decks/${deck.id}`}
+            >
+              Done
+            </Link>
+          )}
+          {!newCard && (
+            <Link
+              className="btn btn-lg btn-secondary mr-2"
+              to={`/decks/${deck.id}`}
+            >
+              Cancel
+            </Link>
+          )}
+          {newCard && (
+            <button className="btn btn-lg btn-primary" type="submit">
+              Save
+            </button>
+          )}
+          {!newCard && (
+            <button className="btn btn-lg btn-primary" type="submit">
+              Submit
+            </button>
+          )}
         </form>
       </div>
     </React.Fragment>
